@@ -1,0 +1,1441 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "aggregator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "AggregatorRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "BatchDivided",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "cropType",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "CropCollected",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "customer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "CustomerRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "farmer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "FarmerRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "productId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "gasValue",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "temperature",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "humidity",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "FreshnessUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					}
+				],
+				"name": "PurchaseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "retailer",
+						"type": "address"
+					}
+				],
+				"name": "ReceivedFromAggregator",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "supplier",
+						"type": "address"
+					}
+				],
+				"name": "ReceivedFromFarmer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "aggregator",
+						"type": "address"
+					}
+				],
+				"name": "ReceivedFromSupplier",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "retailer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "RetailerRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "supplier",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "SupplierRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "aggregator",
+						"type": "address"
+					}
+				],
+				"name": "TransferredToAggregator",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "consumer",
+						"type": "address"
+					}
+				],
+				"name": "TransferredToConsumer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "retailer",
+						"type": "address"
+					}
+				],
+				"name": "TransferredToRetailer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "supplier",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "TransferredToSupplier",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "aggregatorDivideBatch",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "aggregatorProfiles",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "aggregatorReceiveFromSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "retailer",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					}
+				],
+				"name": "aggregatorTransferToRetailer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "aggregators",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "batches",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "received",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "receivedDate",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "divided",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "dividedDate",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "currentHolder",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "_purchased",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "_feedback",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_date",
+						"type": "string"
+					}
+				],
+				"name": "consumerConfirmPurchase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "seed",
+						"type": "uint256"
+					}
+				],
+				"name": "createUniqueCropID",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "cropCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "cropIDs",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "crops",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "string",
+						"name": "cropType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "origin",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Farmer.Stage",
+						"name": "stage",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "currentHolder",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "customerProfiles",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "customers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "exists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "string",
+						"name": "cropType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "origin",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "farmerCollectCrop",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "farmerProfiles",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "supplier",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					}
+				],
+				"name": "farmerTransferToSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "farmers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productId",
+						"type": "uint256"
+					}
+				],
+				"name": "getFreshness",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "gasValue",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "temperature",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "humidity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isAccountRegistered",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "productFreshness",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "gasValue",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "temperature",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "humidity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "purchases",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "purchased",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "feedback",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "purchaseDate",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"name": "registerAggregator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"name": "registerCustomer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"name": "registerFarmer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"name": "registerRetailer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"name": "registerSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "retailerProfiles",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "retailPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "retailerReceiveFromAggregator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "consumer",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					}
+				],
+				"name": "retailerTransferToConsumer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "retailers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "retails",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "retailPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "receivedDate",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "holder",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "supplierProfiles",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "contact",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "transportCost",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					}
+				],
+				"name": "supplierReceiveFromFarmer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "aggregator",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					}
+				],
+				"name": "supplierTransferToAggregator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "suppliers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "supplies",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "cropID",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "transportCost",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "receivedDate",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "transferDate",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "currentHolder",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_gasValue",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_temperature",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_humidity",
+						"type": "uint256"
+					}
+				],
+				"name": "updateFreshness",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"TrackSupplyChain.sol": "TrackSupplyChain"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Aggregator.sol": {
+			"keccak256": "0x5d5592f5ad1faf30eec9afd254b7e1e6c7c46c37356fa79de58f9b4b09223376",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://055a71d89c82ae0f912176578faa4006bc6c358a022e71892b42ed8a40389c51",
+				"dweb:/ipfs/QmbZ8aN6QhoFHXc6U2NrVsHscZwdevhbZgcC7ADZgpKX3Z"
+			]
+		},
+		"Customer.sol": {
+			"keccak256": "0x4d7e2c04bda4263d912fe8c0a1eac34900fe43fd7fc52a1e8332a95c988fda4a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://544d90b9c22ad0202a4933a405270f9c611e7cee2fd338d8bea9bd08735c0c9d",
+				"dweb:/ipfs/QmTfZK4Y1pqfn1nMV7BLyHX6xNpPTzECRYqoxGTJMTPJ8w"
+			]
+		},
+		"Farmer.sol": {
+			"keccak256": "0x3e8ef1558ea0e0d9b6aaa837087a4b2da54df6f18fd5bd5315015041db085fab",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d30a207a81e898b63ffa6a6a7554e28d01062ec45abe6b07773ec194a67c1843",
+				"dweb:/ipfs/QmW4czmEZ6KZBJc7uzP1HmnycnP5ZPdEMD6E632aPC4awP"
+			]
+		},
+		"Registrable.sol": {
+			"keccak256": "0x6d55d491cc4bc6f50acd0b208d84696835be06b727971989baa2246cd398ca0d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://af62b2ee742cf84cf5cb0dfcb6a78af1bf03e7721c771ef660eac6b008b7250d",
+				"dweb:/ipfs/QmQ86Y39iAqMLEgeY2sMYcfm9QEF5k5S44axo1P5fMka4p"
+			]
+		},
+		"Retailer.sol": {
+			"keccak256": "0x8b7966578d74af9de8b5dca3db101c52e402d98c581682133af37b7487955f91",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f2165dcc51a45ea41f72d08bcae944f46fa5d893a2e5433058f0f95ff6d0b1eb",
+				"dweb:/ipfs/QmWZhhdiu8noQphoJaWYQdMqC9ikUDVXWaagEZxrbEhKvC"
+			]
+		},
+		"Supplier.sol": {
+			"keccak256": "0xc1df60959a9213fb14649570185cf6100002d61d83a89bed0d50704f4ea601b5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bb230ba34acd6a7969b475f3cdad6d761fae77548e0dcc41b96300fd6d06a7ea",
+				"dweb:/ipfs/QmSWkaFUmwZQe4wgMTnQjHm2p6MFNnSwsUNzLUTBsYphP3"
+			]
+		},
+		"TrackSupplyChain.sol": {
+			"keccak256": "0x59ce8e77235a412f037e5679426c84b86a927c133a2a214caafe0c26e09c75f2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d86989dc7ed8c6627fd2a543329e3204765c33f65d4eabcee72084c092d8403b",
+				"dweb:/ipfs/QmdaFdFtkePVX3JBt17UvDXgvzLzcy86NJhWgFAc5UgTmz"
+			]
+		}
+	},
+	"version": 1
+}

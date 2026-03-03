@@ -1,0 +1,318 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"aggregatorDivideBatch(bytes32,string)": "27ed3540",
+			"aggregatorProfiles(address)": "8039feef",
+			"aggregatorReceiveFromSupplier(bytes32,string)": "c9820cc4",
+			"aggregatorTransferToRetailer(bytes32,address,string)": "7304957b",
+			"aggregators(address)": "112cdab9",
+			"batches(bytes32)": "c81e25ab",
+			"registerAggregator(string,string,string)": "e9ef9cf7"
+		}
+	},
+	"abi": [
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "aggregator",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				}
+			],
+			"name": "AggregatorRegistered",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "date",
+					"type": "string"
+				}
+			],
+			"name": "BatchDivided",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "aggregator",
+					"type": "address"
+				}
+			],
+			"name": "ReceivedFromSupplier",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "retailer",
+					"type": "address"
+				}
+			],
+			"name": "TransferredToRetailer",
+			"type": "event"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "string",
+					"name": "date",
+					"type": "string"
+				}
+			],
+			"name": "aggregatorDivideBatch",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "aggregatorProfiles",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "location",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "contact",
+					"type": "string"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "string",
+					"name": "date",
+					"type": "string"
+				}
+			],
+			"name": "aggregatorReceiveFromSupplier",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "retailer",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "transferDate",
+					"type": "string"
+				}
+			],
+			"name": "aggregatorTransferToRetailer",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "aggregators",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "batches",
+			"outputs": [
+				{
+					"internalType": "bytes32",
+					"name": "cropID",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "bool",
+					"name": "received",
+					"type": "bool"
+				},
+				{
+					"internalType": "string",
+					"name": "receivedDate",
+					"type": "string"
+				},
+				{
+					"internalType": "bool",
+					"name": "divided",
+					"type": "bool"
+				},
+				{
+					"internalType": "string",
+					"name": "dividedDate",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "transferDate",
+					"type": "string"
+				},
+				{
+					"internalType": "address",
+					"name": "currentHolder",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "location",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "contact",
+					"type": "string"
+				}
+			],
+			"name": "registerAggregator",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

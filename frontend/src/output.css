@@ -1,0 +1,12 @@
+/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+.block {
+  display: block;
+}
+.contents {
+  display: contents;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
