@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const ABI = CONTRACT_JSON.abi;
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
+import { getContract } from "../utils/web3";
 
 function CropStatusTable() {
   const [crops, setCrops] = useState([]);
@@ -27,11 +24,6 @@ function CropStatusTable() {
     return id;
   };
 
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   const loadCropsFromBlockchain = async () => {
     try {
@@ -43,7 +35,7 @@ function CropStatusTable() {
       for (let i = 0; i < Number(count); i++) {
         const cropID = await contract.cropIDs(i);
         const crop = await contract.crops(cropID);
-        
+
         // Also read from other mappings to get current holder
         const supply = await contract.supplies(cropID);
         const batch = await contract.batches(cropID);
@@ -191,7 +183,7 @@ function CropStatusTable() {
   // Auto-refresh every 10 seconds
   useEffect(() => {
     loadCropsFromBlockchain();
-    
+
     const interval = setInterval(() => {
       loadCropsFromBlockchain();
     }, 10000); // Refresh every 10 seconds
@@ -207,7 +199,7 @@ function CropStatusTable() {
           <span style={{ fontSize: '12px', color: '#666' }}>
             Last updated: {lastRefresh.toLocaleTimeString()}
           </span>
-          <button 
+          <button
             onClick={loadCropsFromBlockchain}
             style={{
               padding: '6px 12px',
@@ -254,7 +246,7 @@ function CropStatusTable() {
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span>{shortenId(crop.id)}</span>
-                      <button 
+                      <button
                         onClick={() => copyToClipboard(crop.id)}
                         style={{
                           background: 'none',
@@ -275,7 +267,7 @@ function CropStatusTable() {
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <span>{shortenId(crop.holder)}</span>
-                      <button 
+                      <button
                         onClick={() => copyToClipboard(crop.holder)}
                         style={{
                           background: 'none',

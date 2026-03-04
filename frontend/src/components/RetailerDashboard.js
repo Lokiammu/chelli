@@ -2,10 +2,7 @@
 import React, { useState } from "react";
 import CropStatusTable from "./CropStatusTable";
 import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
-const ABI = CONTRACT_JSON.abi;
+import { getContract } from "../utils/web3";
 
 export default function RetailerDashboard({ userAddress, crops, setCrops }) {
 
@@ -19,13 +16,6 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
   const [customer, setCustomer] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-
-  // CONNECT CONTRACT
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   // =========================
   // ACCEPT FROM AGGREGATOR (BLOCKCHAIN)
@@ -100,7 +90,7 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
 
       // Determine current holder based on which mapping has data
       let currentHolder = cropData.currentHolder;
-      
+
       console.log("Retailer Debug - Holder selection logic:", {
         initialHolder: currentHolder,
         supplyHolder: supplyData.currentHolder,
@@ -113,13 +103,13 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
         currentHolder = supplyData.currentHolder;
         console.log("Retailer Debug - Selected supplier as holder:", currentHolder);
       }
-      
+
       // Check if aggregator has received this crop
       if (batchData.currentHolder && batchData.currentHolder !== "0x0000000000000000000000000000000000000") {
         currentHolder = batchData.currentHolder;
         console.log("Retailer Debug - Selected aggregator as holder:", currentHolder);
       }
-      
+
       // Check if retailer has received this crop
       if (retailData.holder && retailData.holder !== "0x0000000000000000000000000000000000000") {
         currentHolder = retailData.holder;
@@ -189,11 +179,11 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === cropIdAccept
           ? {
-              ...c,
-              stage: "Retailer Accepted",
-              holder: userAddress,
-              transferDate: acceptDate,
-            }
+            ...c,
+            stage: "Retailer Accepted",
+            holder: userAddress,
+            transferDate: acceptDate,
+          }
           : c
       );
 
@@ -286,7 +276,7 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
       // For retailerTransferToConsumer, we only need to check retails mapping
       // since the smart contract specifically checks retails[cropID].holder
       let currentHolder = retailData.holder;
-      
+
       console.log("Retailer Sell Debug - Holder selection logic:", {
         retailHolder: retailData.holder,
         selectedHolder: currentHolder
@@ -346,11 +336,11 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === cropIdSell
           ? {
-              ...c,
-              stage: "Sold to Customer",
-              holder: customer,
-              transferDate: sellDate
-            }
+            ...c,
+            stage: "Sold to Customer",
+            holder: customer,
+            transferDate: sellDate
+          }
           : c
       );
 
@@ -373,7 +363,7 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
 
   return (
     <div className="retailer-root">
-      <div 
+      <div
         className="background-layer"
         style={{
           position: "fixed",
@@ -388,7 +378,7 @@ export default function RetailerDashboard({ userAddress, crops, setCrops }) {
           zIndex: -1
         }}
       />
-      
+
       <div className="ui-layer" style={{
         display: "flex",
         justifyContent: "center",

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import QRCode from "qrcode";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const ABI = CONTRACT_JSON.abi;
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
+import { getContract, getContractAddress } from "../utils/web3";
 
 export default function FarmerDashboard({ userAddress, crops, setCrops }) {
 
@@ -21,13 +18,6 @@ export default function FarmerDashboard({ userAddress, crops, setCrops }) {
   });
 
   const [capturePreview, setCapturePreview] = useState(null);
-
-  // 🔗 CONNECT CONTRACT
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   const uploadToPinata = async (metadata) => {
     const apiBase = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
@@ -129,7 +119,7 @@ export default function FarmerDashboard({ userAddress, crops, setCrops }) {
         cropId: cropID,
         txHash,
         cid,
-        contract: CONTRACT_ADDRESS,
+        contract: getContractAddress(),
         network: networkInfo?.chainId ? `chain-${networkInfo.chainId}` : "unknown",
         verifyUrl: `${window.location.origin}/trace?cropId=${cropID}&tx=${txHash}${cid ? `&cid=${cid}` : ""}`,
       };
@@ -299,7 +289,7 @@ export default function FarmerDashboard({ userAddress, crops, setCrops }) {
           <div>Humidity: {freshness.humidity ?? "--"} %</div>
           <button onClick={senseTempHum}>Sense Temp/Humidity</button>
 
-          <input type="file" onChange={(e)=> {
+          <input type="file" onChange={(e) => {
             const reader = new FileReader();
             reader.onload = () => setCapturePreview(reader.result);
             reader.readAsDataURL(e.target.files[0]);

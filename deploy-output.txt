@@ -1,0 +1,92 @@
+﻿
+Compiling your contracts...
+===========================
+> Compiling .\contracts\Aggregator.sol
+> Compiling .\contracts\Customer.sol
+> Compiling .\contracts\Farmer.sol
+> Compiling .\contracts\Freshness.sol
+> Compiling .\contracts\Migrations.sol
+> Compiling .\contracts\Registrable.sol
+> Compiling .\contracts\Retailer.sol
+> Compiling .\contracts\Supplier.sol
+> Compiling .\contracts\TrackSupplyChain.sol
+> Artifacts written to C:\Users\Asus\yolov8\Mini1\chelli\chelli\backend\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.20+commit.a1b79de6.Emscripten.clang
+
+
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      5777
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x4b30fe84fda3445fa7d287d366f1df2a980d1ac30e33712bb07d38c5f4c5fdc7
+npx : - Blocks: 0            
+Seconds: 0
+At line:1 char:1
++ npx truffle migrate --reset 2>&1 
+| Out-File -FilePath 
+C:\Users\Asus\y ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (- Blocks: 0            
+    Seconds: 0:String) [], Remote   
+ Exception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xc72328483E6664e3430E4eBB234A0141A0CD3E45
+   > block number:        1
+   > block timestamp:     1772605529
+   > account:             0x0b6F844f83af5a0E3E90680BeCdD5868DDdDbAE9
+   > balance:             99.999503929
+   > gas used:            146984 (0x23e28)
+   > gas price:           3.375 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000496071 ETH
+
+- Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.000496071 ETH
+
+
+2_deploy_tracksupplychain.js
+============================
+
+   Deploying 'TrackSupplyChain'
+   ----------------------------
+   > transaction hash:    0x6610630d66403cf3c3b1cdda3b7d7205233a64fae306bc6f60dd446d6dce3079
+- Blocks: 0            Seconds: 0
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x176d0ea06F0E294Ec3C9A1944a6c6F6e1F0A1aB6
+   > block number:        3
+   > block timestamp:     1772605529
+   > account:             0x0b6F844f83af5a0E3E90680BeCdD5868DDdDbAE9
+   > balance:             99.98777861904294581
+   > gas used:            3645470 (0x37a01e)
+   > gas price:           3.17541634 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0115758850049798 ETH
+
+- Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.0115758850049798 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.0120719560049798 ETH
+
+
