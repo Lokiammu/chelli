@@ -1,7 +1,12 @@
 {
-  "dependencies": {
-    "dotenv": "^17.3.1",
-    "solc": "^0.8.34",
-    "web3": "^4.16.0"
+  "name": "agrichain-chelli",
+  "version": "1.0.0",
+  "description": "Blockchain-powered agricultural supply chain tracking",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "deploy": "cd backend && npm run deploy",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start"
   }
 }

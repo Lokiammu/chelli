@@ -2,10 +2,7 @@
 import React, { useState } from "react";
 import CropStatusTable from "./CropStatusTable";
 import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
-const ABI = CONTRACT_JSON.abi;
+import { getContract } from "../utils/web3";
 
 export default function SupplierDashboard({ userAddress, crops, setCrops }) {
 
@@ -19,13 +16,6 @@ export default function SupplierDashboard({ userAddress, crops, setCrops }) {
 
   const [isReceiving, setIsReceiving] = useState(false);
   const [isTransferring, setIsTransferring] = useState(false);
-
-  // CONNECT CONTRACT
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   // =========================
   // RECEIVE FROM FARMER (BLOCKCHAIN)
@@ -64,21 +54,21 @@ export default function SupplierDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === cropIdReceive
           ? {
-              ...c,
-              stage: "Supplier Received",
-              holder: userAddress,
-              history: [
-                ...(c.history || []),
-                {
-                  role: "Supplier",
-                  date: receiveDate,
-                  cost: Number(transportCost),
-                  sender: c.holder,
-                  receiver: userAddress,
-                  note: "Received from farmer",
-                },
-              ],
-            }
+            ...c,
+            stage: "Supplier Received",
+            holder: userAddress,
+            history: [
+              ...(c.history || []),
+              {
+                role: "Supplier",
+                date: receiveDate,
+                cost: Number(transportCost),
+                sender: c.holder,
+                receiver: userAddress,
+                note: "Received from farmer",
+              },
+            ],
+          }
           : c
       );
 
@@ -130,21 +120,21 @@ export default function SupplierDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === cropIdTransfer
           ? {
-              ...c,
-              stage: "Transferred to Aggregator",
-              holder: aggregator,
-              transferDate,
-              history: [
-                ...(c.history || []),
-                {
-                  role: "Supplier",
-                  date: transferDate,
-                  sender: userAddress,
-                  receiver: aggregator,
-                  note: "Transferred to aggregator",
-                },
-              ],
-            }
+            ...c,
+            stage: "Transferred to Aggregator",
+            holder: aggregator,
+            transferDate,
+            history: [
+              ...(c.history || []),
+              {
+                role: "Supplier",
+                date: transferDate,
+                sender: userAddress,
+                receiver: aggregator,
+                note: "Transferred to aggregator",
+              },
+            ],
+          }
           : c
       );
 
@@ -166,7 +156,7 @@ export default function SupplierDashboard({ userAddress, crops, setCrops }) {
 
   return (
     <div className="supplier-root">
-      <div 
+      <div
         className="background-layer"
         style={{
           position: "fixed",

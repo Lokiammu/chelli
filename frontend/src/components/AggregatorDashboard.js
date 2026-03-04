@@ -2,10 +2,7 @@
 import React, { useState } from "react";
 import CropStatusTable from "./CropStatusTable";
 import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const ABI = CONTRACT_JSON.abi;
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
+import { getContract } from "../utils/web3";
 
 export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
 
@@ -20,13 +17,6 @@ export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
 
   const [isReceiving, setIsReceiving] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  // 🔗 CONNECT CONTRACT
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   // =========================
   // RECEIVE FROM SUPPLIER (BLOCKCHAIN)
@@ -100,7 +90,7 @@ export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
 
       if (receipt.status === 1) {
         console.log("Aggregator Receive Debug - Transaction SUCCESSFUL");
-        
+
         // Verify the data was actually stored
         const batchData = await contract.batches(cropID);
         console.log("Aggregator Receive Debug - Stored data verification:", {
@@ -117,22 +107,22 @@ export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === receiveCropId
           ? {
-              ...c,
-              stage: "Received by Aggregator",
-              holder: userAddress,
-              transferDate: receiveDate,
-              history: [
-                ...(c.history || []),
-                {
-                  role: "Aggregator",
-                  sender: c.holder,
-                  receiver: userAddress,
-                  date: receiveDate,
-                  cost: 0,
-                  note: "Received from Supplier",
-                },
-              ],
-            }
+            ...c,
+            stage: "Received by Aggregator",
+            holder: userAddress,
+            transferDate: receiveDate,
+            history: [
+              ...(c.history || []),
+              {
+                role: "Aggregator",
+                sender: c.holder,
+                receiver: userAddress,
+                date: receiveDate,
+                cost: 0,
+                note: "Received from Supplier",
+              },
+            ],
+          }
           : c
       );
 
@@ -256,22 +246,22 @@ export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === cropId
           ? {
-              ...c,
-              stage: "Processed by Aggregator",
-              holder: retailer,
-              transferDate: date,
-              history: [
-                ...(c.history || []),
-                {
-                  role: "Aggregator",
-                  sender: userAddress,
-                  receiver: retailer,
-                  date,
-                  cost: processingCost,  // USE BLOCKCHAIN COST
-                  note: "Processed, graded & sent to retailer",
-                },
-              ],
-            }
+            ...c,
+            stage: "Processed by Aggregator",
+            holder: retailer,
+            transferDate: date,
+            history: [
+              ...(c.history || []),
+              {
+                role: "Aggregator",
+                sender: userAddress,
+                receiver: retailer,
+                date,
+                cost: processingCost,  // USE BLOCKCHAIN COST
+                note: "Processed, graded & sent to retailer",
+              },
+            ],
+          }
           : c
       );
 
@@ -293,7 +283,7 @@ export default function AggregatorDashboard({ userAddress, crops, setCrops }) {
 
   return (
     <div className="aggregator-root">
-      <div 
+      <div
         className="background-layer"
         style={{
           position: "fixed",

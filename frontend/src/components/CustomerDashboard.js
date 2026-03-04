@@ -1,23 +1,13 @@
 // src/components/CustomerDashboard.js
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const ABI = CONTRACT_JSON.abi;
-const CONTRACT_ADDRESS = "0x6934948aa57D9909f90b06905559ddf0851BE29F";
+import { getContract } from "../utils/web3";
 
 function CustomerDashboard({ crops, setCrops }) {
   const [cropId, setCropId] = useState("");
   const [crop, setCrop] = useState(null);
   const [purchaseDate, setPurchaseDate] = useState("");
   const [showTimeline, setShowTimeline] = useState(false);
-
-  // 🔗 CONNECT CONTRACT
-  const getContract = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  };
 
   // =========================
   // TRACE FROM BLOCKCHAIN (Same as header TraceProduct)
@@ -55,20 +45,20 @@ function CustomerDashboard({ crops, setCrops }) {
 
       // build timeline with proper holder verification (same as TraceProduct)
       console.log("Customer Trace Debug - Building timeline from blockchain data");
-      
+
       // Determine actual holders from each mapping
       let farmerHolder = cropData.currentHolder;
-      let supplierHolder = supplyData.currentHolder && supplyData.currentHolder !== "0x0000000000000000000000000000000000000" 
-        ? supplyData.currentHolder 
+      let supplierHolder = supplyData.currentHolder && supplyData.currentHolder !== "0x0000000000000000000000000000000000000"
+        ? supplyData.currentHolder
         : null;
-      let aggregatorHolder = batchData.currentHolder && batchData.currentHolder !== "0x0000000000000000000000000000000000000000" 
-        ? batchData.currentHolder 
+      let aggregatorHolder = batchData.currentHolder && batchData.currentHolder !== "0x0000000000000000000000000000000000000000"
+        ? batchData.currentHolder
         : null;
-      let retailerHolder = retailData.holder && retailData.holder !== "0x0000000000000000000000000000000000000000" 
-        ? retailData.holder 
+      let retailerHolder = retailData.holder && retailData.holder !== "0x0000000000000000000000000000000000000000"
+        ? retailData.holder
         : null;
-      let customerBuyer = purchaseData.buyer && purchaseData.buyer !== "0x0000000000000000000000000000000000000000" 
-        ? purchaseData.buyer 
+      let customerBuyer = purchaseData.buyer && purchaseData.buyer !== "0x0000000000000000000000000000000000000000"
+        ? purchaseData.buyer
         : null;
 
       console.log("Customer Trace Debug - Determined holders:", {
@@ -187,7 +177,7 @@ function CustomerDashboard({ crops, setCrops }) {
 
     } catch (err) {
       console.error("Customer trace failed, using fallback", err);
-      
+
       // fallback to local data (same as TraceProduct)
       const found = crops.find((c) => c.id === cropId);
       if (!found) {
@@ -248,11 +238,11 @@ function CustomerDashboard({ crops, setCrops }) {
       const updated = crops.map((c) =>
         c.id === (crop.cropId || crop.id)
           ? {
-              ...c,
-              stage: "Purchased by Customer",
-              holder: "Customer",
-              transferDate: purchaseDate,
-            }
+            ...c,
+            stage: "Purchased by Customer",
+            holder: "Customer",
+            transferDate: purchaseDate,
+          }
           : c
       );
 

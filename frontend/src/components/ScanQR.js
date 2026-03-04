@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { getContract } from "../utils/web3";
 
 function parseScannedPayload(rawValue) {
   if (!rawValue) return null;
@@ -43,7 +44,7 @@ function toContractCropId(cropId) {
   }
 }
 
-export default function ScanQR({ getContract }) {
+export default function ScanQR() {
   const [scannedText, setScannedText] = useState("");
   const [decoded, setDecoded] = useState(null);
   const [cropData, setCropData] = useState(null);

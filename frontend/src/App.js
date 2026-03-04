@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import CONTRACT_JSON from "./abi/TrackSupplyChain.json";
+import {
+  getContract,
+  getEthereumProvider,
+  getContractAddress,
+  GANACHE_CHAIN_ID,
+} from "./utils/web3";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -13,27 +17,11 @@ import ScanQR from "./components/ScanQR";
 import AboutUs from "./components/AboutUs";
 import "./App.css";
 
-const ABI = CONTRACT_JSON.abi;
-const GANACHE_CHAIN_ID = "0x539";
 const NETWORKS = {
   "0x1": "Ethereum Mainnet",
   "0x539": "Ganache Localhost",
   "0x7a69": "Hardhat Localhost",
   "0x5": "Goerli Testnet",
-};
-
-const getEthereumProvider = () => {
-  if (!window.ethereum) return null;
-
-  // Brave can inject multiple providers. Prefer MetaMask if present.
-  if (Array.isArray(window.ethereum.providers)) {
-    const metaMaskProvider = window.ethereum.providers.find(
-      (provider) => provider?.isMetaMask
-    );
-    return metaMaskProvider || window.ethereum;
-  }
-
-  return window.ethereum;
 };
 
 export default function App() {
@@ -51,6 +39,7 @@ export default function App() {
   const [networkWarning, setNetworkWarning] = useState("");
   const currentRole = currentUser?.role?.toLowerCase() || "";
 
+  // ── Network helpers ───────────────────────────────────
   const setNetworkFromChainId = (chainId) => {
     setNetwork(NETWORKS[chainId] || chainId);
     setNetworkWarning(
@@ -87,24 +76,7 @@ export default function App() {
     setNetworkFromChainId(chainId);
   };
 
-  const getContract = async () => {
-    const eth = getEthereumProvider();
-    if (!eth) {
-      throw new Error("MetaMask not detected");
-    }
-    const provider = new ethers.BrowserProvider(eth);
-    const signer = await provider.getSigner();
-    const network = await provider.getNetwork();
-    const chainId = Number(network.chainId).toString();
-    const deployedNetwork = CONTRACT_JSON.networks?.[chainId];
-
-    if (!deployedNetwork?.address) {
-      throw new Error(`Contract not deployed on chain ${chainId}`);
-    }
-
-    return new ethers.Contract(deployedNetwork.address, ABI, signer);
-  };
-
+  // ── Persistence ───────────────────────────────────────
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const storedUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -132,10 +104,15 @@ export default function App() {
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }, [currentUser]);
 
+  // ── Load crops from blockchain ────────────────────────
   useEffect(() => {
     const loadCropsFromBlockchain = async () => {
       try {
         if (!getEthereumProvider()) return;
+        if (!getContractAddress()) {
+          console.warn("Contract address not found — skipping crop load.");
+          return;
+        }
 
         const contract = await getContract();
         const count = Number(await contract.cropCount());
@@ -158,13 +135,14 @@ export default function App() {
 
         setCrops(loaded);
       } catch (err) {
-        console.error("Blockchain crop load error:", err);
+        console.error("Blockchain crop load error:", err.message);
       }
     };
 
     loadCropsFromBlockchain();
   }, []);
 
+  // ── MetaMask wallet connection ────────────────────────
   const connectWallet = async () => {
     const eth = getEthereumProvider();
     if (!eth) {
@@ -183,6 +161,7 @@ export default function App() {
     setNetworkFromChainId(chainId);
   };
 
+  // ── MetaMask event listeners ──────────────────────────
   useEffect(() => {
     const eth = getEthereumProvider();
     if (!eth) return;
@@ -212,6 +191,7 @@ export default function App() {
     };
   }, []);
 
+  // ── Auth handlers ─────────────────────────────────────
   const handleRegister = (user) => {
     setUsers((prev) => [...prev, user]);
     alert("Registered successfully! Please login.");
@@ -228,6 +208,7 @@ export default function App() {
     setPage("login");
   };
 
+  // ── Navigation handlers ───────────────────────────────
   const handleTrackProduce = (crop) => {
     setSelectedCrop(crop);
     setPage("trace");
@@ -248,6 +229,7 @@ export default function App() {
     setPage("chat");
   };
 
+  // ── Render ────────────────────────────────────────────
   return (
     <div className="App">
       <header className="header">
@@ -347,7 +329,7 @@ export default function App() {
         <TraceProduct crops={crops} selectedCrop={selectedCrop} />
       )}
 
-      {page === "scanqr" && currentUser && <ScanQR getContract={getContract} />}
+      {page === "scanqr" && currentUser && <ScanQR />}
 
       {page === "about" && <AboutUs />}
     </div>

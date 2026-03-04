@@ -1,41 +1,5 @@
 import React, { useState } from "react";
-import { ethers } from "ethers";
-import CONTRACT_JSON from "../abi/TrackSupplyChain.json";
-
-const ABI = CONTRACT_JSON.abi;
-const GANACHE_CHAIN_ID = "0x539";
-
-const getEthereumProvider = () => {
-  if (!window.ethereum) return null;
-
-  if (Array.isArray(window.ethereum.providers)) {
-    const metaMaskProvider = window.ethereum.providers.find(
-      (provider) => provider?.isMetaMask
-    );
-    return metaMaskProvider || window.ethereum;
-  }
-
-  return window.ethereum;
-};
-
-const getContract = async () => {
-  const eth = getEthereumProvider();
-  if (!eth) {
-    throw new Error("MetaMask not detected");
-  }
-
-  const provider = new ethers.BrowserProvider(eth);
-  const signer = await provider.getSigner();
-  const network = await provider.getNetwork();
-  const chainId = Number(network.chainId).toString();
-  const deployedNetwork = CONTRACT_JSON.networks?.[chainId];
-
-  if (!deployedNetwork?.address) {
-    throw new Error(`Contract not deployed on chain ${chainId}`);
-  }
-
-  return new ethers.Contract(deployedNetwork.address, ABI, signer);
-};
+import { getContract, getEthereumProvider, checkNetwork } from "../utils/web3";
 
 function Register({ account, onSwitchToLogin }) {
   const [name, setName] = useState("");
@@ -59,9 +23,10 @@ function Register({ account, onSwitchToLogin }) {
     try {
       setLoading(true);
 
-      const chainId = await eth.request({ method: "eth_chainId" });
-      if (chainId !== GANACHE_CHAIN_ID) {
-        alert("Please switch MetaMask network to Ganache Localhost (1337).");
+      // Validate network
+      const net = await checkNetwork();
+      if (!net.ok) {
+        alert(net.error);
         return;
       }
 
@@ -85,8 +50,14 @@ function Register({ account, onSwitchToLogin }) {
       alert(`Successfully registered as ${role} on blockchain`);
       onSwitchToLogin();
     } catch (err) {
-      console.error(err);
-      alert("Blockchain transaction failed or rejected");
+      console.error("Registration error:", err);
+      if (err.message.includes("Account already registered")) {
+        alert("This wallet is already registered. Please login instead.");
+      } else if (err.message.includes("Contract address not found")) {
+        alert(err.message);
+      } else {
+        alert("Blockchain transaction failed or rejected. Check console for details.");
+      }
     } finally {
       setLoading(false);
     }
